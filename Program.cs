@@ -10,11 +10,27 @@
 
         static bool IsAnagram(string s, string t)
         {
-            char[] a = s.ToCharArray();
-            char[] b = t.ToCharArray();
-            Array.Sort(a);
-            Array.Sort(b);
-            return new string(a) == new string(b);
+            Dictionary<char, int> frequency = new();
+            foreach (var item in s)
+            {
+                if (frequency.ContainsKey(item))
+                    frequency[item]++;
+                else
+                    frequency.Add(item, 1);
+            }
+            foreach (var item in t)
+            {
+                if (frequency.ContainsKey(item))
+                    frequency[item]--;
+                else
+                    return false;
+            }
+            foreach (var item in frequency)
+            {
+                if (item.Value != 0)
+                    return false;
+            }
+            return true;
         }
     }
 }
